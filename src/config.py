@@ -1,16 +1,17 @@
+import os
 from binance.client import Client
 from dotenv import load_dotenv
-import os
 
-# Load environment variables
 load_dotenv()
 
-API_KEY = os.getenv("BINANCE_API_KEY")
-API_SECRET = os.getenv("BINANCE_API_SECRET")
+def get_client():
+    api_key = os.getenv("BINANCE_API_KEY")
+    api_secret = os.getenv("BINANCE_API_SECRET")
 
-if not API_KEY or not API_SECRET:
-    raise Exception("API keys not found. Check your .env file")
+    if not api_key or not api_secret:
+        raise RuntimeError("API credentials not found")
 
-# Binance Futures Testnet
-client = Client(API_KEY, API_SECRET)
-client.FUTURES_URL = "https://testnet.binancefuture.com"
+    client = Client(api_key, api_secret)
+    client.FUTURES_URL = "https://testnet.binancefuture.com"
+
+    return client
